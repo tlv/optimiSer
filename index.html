@@ -25,6 +25,11 @@
         var map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
 
+	    var userMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(42.359374, -71.093853),
+            map: map
+        });
+
         var input = (document.getElementById('pac-input'));
 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); //link google maps search function to the input field
 		var searchBox = new google.maps.places.SearchBox((input));
@@ -104,12 +109,14 @@
 
     	var heatmapEveryone = new google.maps.visualization.HeatmapLayer({
 			data: heatMapEveryoneData,
-			radius: 20
+			radius: 20,
+			opacity: 0.4
 		});
 
 		var heatmapJustMe = new google.maps.visualization.HeatmapLayer({
 			data: heatMapJustMeData,
-			radius: 20
+			radius: 20,
+			opacity: 0.4
 		});
 
 		var canPickUp = true; //boolean to determine whether or not you can pick up someone right now
@@ -134,7 +141,17 @@
 					cancelButton.hide();
 					pickupButton.css("width", 500);
 					pickupButton.css("background-color", "green");
-					//TODO: add random datapoint to heatmap
+					
+					// if (drop){
+					// 	var randomLat = (Math.random() * (42.364366 - 42.351867) + 42.351867).toFixed(4)
+					// 	var randomLon = (Math.random() * (-71.115976 - -71.075721) + -71.075721).toFixed(4)
+					// 	var randomDataPoint = {location: new google.maps.LatLng(randomLat, randomLon), weight:3};
+					// 	heatMapEveryoneData.push(randomDataPoint);
+					// 	heatMapJustMeData.push(randomDataPoint);
+					// 	console.log(heatMapEveryoneData.length);
+					// }
+					
+
 					canPickUp = true;
                 });
                 $("#no").click(function(){
@@ -212,10 +229,6 @@
 	    });
 
 	});
-
-      
-
-      
     </script>
 </head> 
 <body>
@@ -224,7 +237,10 @@
 		<div class="button segmentedControl leftEnd tab" id="leftButton">All Rider History</div>
     	<div class="button segmentedControl rightEnd tab" id="rightButton">My Rider History</div>
 	</div>
-	<div class="rounded" id="mapContainer">
+	<div id="legendContainer">
+		<span> LEGEND GOES HERE </span>
+	</div>
+	<div id="mapContainer">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="map"></div>
 	</div>
