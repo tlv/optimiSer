@@ -102,15 +102,16 @@
 
     	var heatmapEveryone = new google.maps.visualization.HeatmapLayer({
 			data: heatMapEveryoneData,
-			opacity: 0.5
+			radius: 20
 		});
 
 		var heatmapJustMe = new google.maps.visualization.HeatmapLayer({
 			data: heatMapJustMeData,
-			opacity: 0.5
+			radius: 20
 		});
 
 		$(document).ready(function(){
+			// Everyone/justme tab functionality
 			var leftTab = $("#leftButton");
 			var rightTab = $("#rightButton");
 			leftTab.addClass("selected");
@@ -131,6 +132,33 @@
 				heatmapEveryone.setMap(null);
 				heatmapJustMe.setMap(map);
 			});
+
+			var pickupButton = $("#pickupDropoff");
+			var cancelButton = $("#cancel");
+
+			cancelButton.css("width", 0);
+			cancelButton.hide();
+
+			var canPickUp = true; //boolean to determine whether or not you can pick up someone right now
+
+			pickupButton.bind("click", function(){
+				if (canPickUp){
+					pickupButton.text("Drop Off");
+					cancelButton.css("width", 95);
+					cancelButton.show("slow");
+					pickupButton.css("width", 395);
+					pickupButton.css("background-color", "#6297f2");
+					canPickUp = false;
+				} else {
+					pickupButton.text("Pick Up");
+					cancelButton.css("width", 0);
+					cancelButton.hide();
+					pickupButton.css("width", 500);
+					pickupButton.css("background-color", "green");
+					canPickUp = true;
+				}
+			});
+
 		});
 
 
@@ -151,6 +179,10 @@
 	<div class="rounded">
 		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="map"></div>
+	</div>
+	<div id="dropoffContainer">
+		<div class="rounded" id = "pickupDropoff">Pick Up</div>
+		<div class="rounded" id = "cancel">&#215;  Cancel</div>
 	</div>
 </body>
 </html>
