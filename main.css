@@ -67,10 +67,13 @@ height: 40px;
 float: left;
 text-align: center;
 background-color: green;
-border: solid 1px #9a9a99;
+border: 2px solid #fff;
+-webkit-border-radius:8px;
 font-size: 16px;
 vertical-align: middle;
 line-height: 40px; 
+font-family: Helvetica;
+-webkit-box-shadow:-1px 2px 12px rgba(0, 0, 0, 0.91);
 }
 
 #cancel {
@@ -83,4 +86,9 @@ border: solid 1px #9a9a99;
 font-size: 16px;
 vertical-align: middle;
 line-height: 40px; 
+font-family: Helvetica;
+border: 2px solid #fff;
+-webkit-border-radius:8px;
+-webkit-box-shadow:-1px 2px 12px rgba(0, 0, 0, 0.91);
 }
+

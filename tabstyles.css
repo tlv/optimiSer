@@ -29,6 +29,7 @@
             #bdbdbd);
     color: #6b6b6b;
     font-size: 16px;
+    font-family: Helvetica;
     padding: 10px;
 }
 .button.segmentedControl:hover, .button.segmentedControl.hover, .button.segmentedControl.selected {
