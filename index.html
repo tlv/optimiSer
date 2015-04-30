@@ -6,29 +6,13 @@
 	<link rel="stylesheet" type="text/css" href="tabstyles.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
 
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			var leftTab = $("#leftButton");
-			var rightTab = $("#rightButton");
-			leftTab.addClass("selected");
-			leftTab.bind("click", function(){
-				leftTab.addClass("selected");
-				rightTab.removeClass("selected");
 
-				//TODO: change heatmap
-			});
+		
 
-			rightTab.bind("click", function(){
-				rightTab.addClass("selected");
-				leftTab.removeClass("selected");
-
-				//TODO: change heatmap
-			});
-		});
-	</script>
-	<script type="text/javascript">
+		
       function initialize() {
       	var markers = [];
         var mapOptions = {
@@ -86,8 +70,77 @@
 			searchBox.setBounds(bounds);
 		});
 
+		var heatMapEveryoneData = [
+		  {location: new google.maps.LatLng(42.359749, -71.094359), weight: 0.5},
+		  new google.maps.LatLng(42.357184, -71.100963),
+		  {location: new google.maps.LatLng(42.354833, -71.101483), weight: 2},
+		  {location: new google.maps.LatLng(42.355701, -71.099364), weight: 3},
+		  {location: new google.maps.LatLng(42.359122, -71.088287), weight: 2},
+		  new google.maps.LatLng(42.356157, -71.097299),
+		  {location: new google.maps.LatLng(42.360804,  -71.084427), weight: 0.5},
+
+		  {location: new google.maps.LatLng(42.359950, -71.086018), weight: 3},
+		  {location: new google.maps.LatLng(42.351504, -71.087694), weight: 2},
+		  new google.maps.LatLng(42.350880, -71.088469),
+		  {location: new google.maps.LatLng(42.350927, -71.089942), weight: 0.5},
+		  new google.maps.LatLng(42.359743, -71.101848),
+		  {location: new google.maps.LatLng(42.360296, -71.102811), weight: 2},
+		  {location: new google.maps.LatLng(42.362507, -71.086605), weight: 3}
+		];
+
+		var heatMapJustMeData = [
+		  new google.maps.LatLng(42.357184, -71.100963),
+		  {location: new google.maps.LatLng(42.359122, -71.088287), weight: 2},
+		  new google.maps.LatLng(42.356157, -71.097299),
+		  {location: new google.maps.LatLng(42.351504, -71.087694), weight: 2},
+		  new google.maps.LatLng(42.350880, -71.088469),
+		  new google.maps.LatLng(42.359743, -71.101848),
+		  {location: new google.maps.LatLng(42.360296, -71.102811), weight: 2},
+		  {location: new google.maps.LatLng(42.362507, -71.086605), weight: 2}
+
+		];
+
+    	var heatmapEveryone = new google.maps.visualization.HeatmapLayer({
+			data: heatMapEveryoneData,
+			opacity: 0.5
+		});
+
+		var heatmapJustMe = new google.maps.visualization.HeatmapLayer({
+			data: heatMapJustMeData,
+			opacity: 0.5
+		});
+
+		$(document).ready(function(){
+			var leftTab = $("#leftButton");
+			var rightTab = $("#rightButton");
+			leftTab.addClass("selected");
+			
+			heatmapEveryone.setMap(map);
+			leftTab.bind("click", function(){
+				leftTab.addClass("selected");
+				rightTab.removeClass("selected");
+
+				heatmapJustMe.setMap(null);
+				heatmapEveryone.setMap(map);
+			});
+
+			rightTab.bind("click", function(){
+				rightTab.addClass("selected");
+				leftTab.removeClass("selected");
+
+				heatmapEveryone.setMap(null);
+				heatmapJustMe.setMap(map);
+			});
+		});
+
+
       }
       google.maps.event.addDomListener(window, 'load', initialize);
+
+
+      
+
+      
     </script>
 </head> 
 <body>
