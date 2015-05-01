@@ -7,9 +7,12 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="modals.css">
 	<link rel="stylesheet" type="text/css" href="tabstyles.css">
+	<link rel="stylesheet" type="text/css" href="notifybar/css/jquery.notifyBar.css">
 
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="notifybar/jquery.notifyBar.js"></script>
+
 	<script type="text/javascript">
 
 		
@@ -122,6 +125,10 @@
 
 		var canPickUp = true; //boolean to determine whether or not you can pick up someone right now
 
+		var dropOffMessage = "Are you sure you want to drop off some hobo named Wei?";
+
+		var undoMessage = "Are you sure you want to cancel picking up some hobo named Wei?";
+
 		//code to create the modal for pickup/dropoff/cancel
 		var generateDialog = function(message, pickupButton, cancelButton){
 			$(document.body).append("<div id='greyedOutOverlay'></div>"); //create the overlay
@@ -143,6 +150,12 @@
 					cancelButton.hide();
 					pickupButton.css("width", 500);
 					pickupButton.css("background-color", "green");
+                	//ignore this code please
+                	if (message == dropOffMessage){
+                		$.notifyBar({html:'Dropped off a passenger.'});
+                	}else{
+                		$.notifyBar({html:'Canceled a pickup.'});
+                	}
 					
 					// if (drop){
 					// 	var randomLat = (Math.random() * (42.364366 - 42.351867) + 42.351867).toFixed(4)
@@ -198,7 +211,9 @@
 
 			//pickup button listener
 			pickupButton.bind("click", function(){
+				console.log("PICKUPBUTTON CLICKED")
 				if (canPickUp){
+					$.notifyBar({html:'Picked up a rider'})
 					pickupButton.text("Drop Off");
 					cancelButton.css("width", 95);
 					cancelButton.show("slow");
@@ -207,12 +222,12 @@
 					canPickUp = false;
 
 				} else {
-					generateDialog("Are you sure you want to drop off some hobo named Wei?", pickupButton, cancelButton, canPickUp);
+					generateDialog(dropOffMessage, pickupButton, cancelButton, canPickUp);
 				}
 			});
 
 			cancelButton.bind("click", function(){
-				generateDialog("Are you sure you want to cancel picking up some hobo named Wei?", pickupButton, cancelButton, canPickUp);
+				generateDialog(undoMessage, pickupButton, cancelButton, canPickUp);
 			});
 
 		});
