@@ -183,24 +183,37 @@
 		$(document).ready(function(){
 			// Everyone/justme tab functionality
 			var leftTab = $("#leftButton");
+			var midTab = $("#midButton");
 			var rightTab = $("#rightButton");
+
 			leftTab.addClass("selected");
 			
 			heatmapEveryone.setMap(map);
 			leftTab.bind("click", function(){
 				leftTab.addClass("selected");
+				midTab.removeClass("selected");
 				rightTab.removeClass("selected");
 
 				heatmapJustMe.setMap(null);
 				heatmapEveryone.setMap(map);
 			});
 
-			rightTab.bind("click", function(){
-				rightTab.addClass("selected");
+			midTab.bind("click", function(){
+				midTab.addClass("selected");
+				rightTab.removeClass("selected");
 				leftTab.removeClass("selected");
 
 				heatmapEveryone.setMap(null);
 				heatmapJustMe.setMap(map);
+			});
+
+			rightTab.bind("click", function(){
+				rightTab.addClass("selected");
+				leftTab.removeClass("selected");
+				midTab.removeClass("selected");
+
+				heatmapEveryone.setMap(null);
+				heatmapJustMe.setMap(null);
 			});
 
 			var pickupButton = $("#pickupDropoff");
@@ -253,7 +266,8 @@
 	<div class="optimiser">
 	<div class="Tabs segmentedControlBase" id="buttonContainer">
 		<div class="button segmentedControl leftEnd tab" id="leftButton">All Rider History</div>
-    	<div class="button segmentedControl rightEnd tab" id="rightButton">My Rider History</div>
+		<div class="button segmentedControl tab" id="midButton">My Rider History</div>
+    	<div class="button segmentedControl rightEnd tab" id="rightButton">Turn Heatmap Off</div>
 	</div>
 	<div id="legendContainer">
 		<span> LEGEND GOES HERE </span>
