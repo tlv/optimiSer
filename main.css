@@ -6,6 +6,11 @@ margin-bottom: 2px;
 margin-left: auto;
 margin-right: auto;
 }
+
+#legendContainer img {
+	margin: 5px;
+}
+
 #buttonContainer{
 height: 40px;
 width: 500px;
