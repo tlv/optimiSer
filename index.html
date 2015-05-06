@@ -153,6 +153,12 @@
                 	//ignore this code please
                 	if (message == dropOffMessage){
                 		$.notifyBar({html:'Dropped off a passenger.'});
+                		var randomLat = (Math.random() * (42.360113 - 42.358100) + 42.358100).toFixed(4);
+						var randomLon = (Math.random() * (-71.096084 - -71.091041) + -71.091041).toFixed(4);
+						console.log(randomLat, randomLon);
+						var randomDataPoint = {location: new google.maps.LatLng(randomLat, randomLon), weight:2};
+						heatMapEveryoneData.push(randomDataPoint);
+						heatMapJustMeData.push(randomDataPoint);
                 	}else{
                 		$.notifyBar({html:'Canceled a pickup.'});
                 	}
