@@ -19,6 +19,11 @@
 
 		
       function initialize() {
+      	var geocoder = new google.maps.Geocoder();
+      	var marker = null;
+      	var infowindow  = new google.maps.InfoWindow({
+				content: ""
+			});;
       	var markers = [];
         var mapOptions = {
           center: { lat: 42.359254, lng: -71.093134}, //center map around 77 mass ave
@@ -60,14 +65,14 @@
 		      };
 
 		      // Create a marker for each place.
-		      var marker = new google.maps.Marker({
+		      var nmarker = new google.maps.Marker({
 		        map: map,
 		        icon: image,
 		        title: place.name,
 		        position: place.geometry.location
 		      });
 
-		      markers.push(marker);
+		      markers.push(nmarker);
 
 		      bounds.extend(place.geometry.location);
 		    }
@@ -79,6 +84,44 @@
 			var bounds = map.getBounds();
 			searchBox.setBounds(bounds);
 		});
+
+		google.maps.event.addListener(map, 'click', function(event) {
+		   placeMarker(event.latLng);
+		});
+
+		function geolocateLatLon(location){
+			geocoder.geocode({'latLng': location}, function(results, status) {
+			    if (status == google.maps.GeocoderStatus.OK) {
+			      if (results[1]) {
+			        
+			        infowindow.setContent("<div style='display:block'>" + results[1].formatted_address + "</div><div style='display:block'>" + location + "</div>");
+			      } else {
+			        infowindow.setContent(location);
+			      }
+			    } else {
+			      infowindow.setContent(location);
+			    }
+			});
+			infowindow.close(marker);
+			infowindow.open(map, marker);
+		}
+
+		function placeMarker(location) {
+			
+			
+			if (marker == null){
+				marker = new google.maps.Marker({
+			        position: location, 
+			        map: map,
+			        icon: "http://maps.google.com/mapfiles/ms/icons/yellow.png"
+			    });	
+				geolocateLatLon(location);
+			} else {
+				marker.setPosition(location);
+				geolocateLatLon(location);
+			}
+		    
+		}
 
 		//hardcoded pickup data
 		var heatMapEveryoneData = [
