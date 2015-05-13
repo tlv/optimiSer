@@ -116,10 +116,18 @@
 			        icon: "http://maps.google.com/mapfiles/ms/icons/yellow.png"
 			    });	
 				geolocateLatLon(location);
+				infowindow.close(marker);
 			} else {
+				
 				marker.setPosition(location);
 				geolocateLatLon(location);
+				infowindow.close(marker);
 			}
+
+			google.maps.event.addListener(marker, 'click', function(event) {
+				infowindow.open(map, marker);
+			});
+
 		    
 		}
 
